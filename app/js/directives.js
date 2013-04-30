@@ -3,9 +3,9 @@
 /* Directives */
 
 
-angular.module('myApp.directives', []).
-  directive('appVersion', ['version', function(version) {
+angular.module('app.directives', []).
+  directive('appVersion', [function() {
     return function(scope, elm, attrs) {
-      elm.text(version);
+      
     };
   }]);
