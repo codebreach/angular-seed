@@ -4,7 +4,6 @@
 
 angular.module('app.controllers', []).
   controller('MyCtrl1', ['$scope', 'user', function(scope, user) {
-	scope.sanity = 'santi';
 	scope.onclick = function() {
 		user.get('user', function(user) {
 			scope.user = user;
@@ -12,13 +11,25 @@ angular.module('app.controllers', []).
 		});
 	};
 	scope.save = function() {
-		var usero = scope.user;
-		usero.name = 'John';
-		user.save(usero, function(user) {
+		var user_ = scope.user;
+		user.save(user_, function(user) {
 			scope.user = user;
 			scope.$digest();
 		});
-	}
+	};
   }])
-  .controller('MyCtrl2', [function() {
+  .controller('MyCtrl2', ['$scope', 'request', function() {
+  	scope.onclick = function() {
+		user.get('user', function(user) {
+			scope.user = user;
+			scope.$digest();
+		});
+	};
+	scope.save = function() {
+		var user_ = scope.user;
+		user.save(user_, function(user) {
+			scope.user = user;
+			scope.$digest();
+		});
+	};
   }]);

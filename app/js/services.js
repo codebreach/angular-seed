@@ -17,27 +17,59 @@ var headers = {
 headers['X-StackMob-API-Key-'+publicKey] = 1;
 
 angular.module('app.services', []).factory('model', function($rootScope) {
-  return function(schema) {
-	var model = StackMob.Model.extend({schemaName: schema});
+	var service = {};
 	
-	var get = function(id, callback) {
-		var options = {};
-		options[schema + '_id'] = id;
-		var instance = new model();
-		instance.set(options);
-		instance.fetch({success: function(data) {
-			callback(data.toJSON());
-		}});
+	var callbacks_ = function(callback) {
+		return {
+			success: function(model) {
+				service.model = model;
+				callback(model.toJSON());
+			},
+			error: function(reason) {
+				log(reason);
+			}
+		};
 	};
-	
-	var save = function(json, callback) {
-		var instance = new model();
-		instance.set(json);
-		instance.save({},{success: function(data) {
-			callback(data.toJSON());
-		}});
-	}
-	return {get: get, save: save}; 	
+	/**
+	 * @param {string=} id The id of the object
+	 * @param {function(!Object)=} callback 
+	 */
+	service.get = function(id, callback) {
+		var options = {};
+		options[service.schema + '_id'] = id;
+		service.model.set(options);
+		service.model.fetch(callbacks_(callback));
+	};
+	service.create = function(callback, json) {
+		service.model = new service.modelProvider(json);
+		service.model.create(callbacks(callback));
+	};
+	service.save = function(json, callback) {
+		service.model.save(json, callbacks_(callback));
+	};
+  return function(schema, binaryFields) {
+	service.schema = schema;
+	service.modelProvider = StackMob.Model.extend({schemaName: schema});
+	service.model = new service.modelProvider();
+	return service;
   };
-}).factory('user', function(model) {return model('user');});;
+}).
+factory('user', function(model) {
+	return model('user');
+}).
+factory('comment', function(model) {
+	return model('comment');
+}).
+factory('estimate', function(model) {
+	return model('estimate');
+}).
+factory('picture', function(model) {
+	return model('picture', 'data');
+}).
+factory('request', function(model) {
+	return model('request');
+}).
+factory('vehicle', function(model) {
+	return model('vehicle');
+});
 
