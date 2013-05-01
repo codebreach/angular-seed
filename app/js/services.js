@@ -2,19 +2,7 @@
 
 /* Services */
 
-
-
-//services.value('StackMobPublicKey', '2301fac2-e4e4-46ec-8061-7ebcb1d53698');
 var publicKey = '2301fac2-e4e4-46ec-8061-7ebcb1d53698';
-var headers = {
-  'Accept': 'application/vnd.stackmob+json; version=0',
-  'X-StackMob-API-Key': publicKey,
-  'X-StackMob-Proxy-Plain': 'stackmob-api',
-  'X-StackMob-User-Agent': 'StackMob (JS; 0.9.1)',
-  'X-StackMob-Expand': 1,
-  'Content-Type': 'application/json'
-};
-headers['X-StackMob-API-Key-'+publicKey] = 1;
 
 angular.module('app.services', []).factory('model', function($rootScope) {
 	var service = {};
@@ -36,7 +24,7 @@ angular.module('app.services', []).factory('model', function($rootScope) {
 	 */
 	service.get = function(id, callback) {
 		var options = {};
-		options[service.schema + '_id'] = id;
+		options[schema + '_id'] = id;
 		service.model.set(options);
 		service.model.fetch(callbacks_(callback));
 	};
