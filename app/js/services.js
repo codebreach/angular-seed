@@ -16,27 +16,28 @@ var headers = {
 };
 headers['X-StackMob-API-Key-'+publicKey] = 1;
 
-angular.module('app.services', []).factory('model', function($q) {
+angular.module('app.services', []).factory('model', function($rootScope) {
   return function(schema) {
 	var model = StackMob.Model.extend({schemaName: schema});
-	var deferedHash = function(q) {
-		return {'success': function(data) {
-				q.resolve(data.attributes);
-			},
-		'error': function(data) {
-				q.reject(data);
-			}
-		}
-	}
-	var get = function(id) {
-		var deferred = $q.defer();
+	
+	var get = function(id, callback) {
 		var options = {};
 		options[schema + '_id'] = id;
 		var instance = new model();
-		instance.fetch(deferedHash(deferred));
-		return deferred.promise;
+		instance.set(options);
+		instance.fetch({success: function(data) {
+			callback(data.toJSON());
+		}});
 	};
-	return {get: get}; 	
+	
+	var save = function(json, callback) {
+		var instance = new model();
+		instance.set(json);
+		instance.save({},{success: function(data) {
+			callback(data.toJSON());
+		}});
+	}
+	return {get: get, save: save}; 	
   };
 }).factory('user', function(model) {return model('user');});;
 
