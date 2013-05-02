@@ -20,7 +20,10 @@ angular.module('app.controllers', []).
   }]).
   controller('MyCtrl2', 
     ['$scope', 'request', 'picture', function(scope, request, picture) {
-  
+  scope.base64 = {array: []};
+  scope.clear = function() {
+    scope.base64.array.length = 0;
+  };
   scope.onclick = function() {
     request.create(scope.request, function(request) {
       scope.request = request;
@@ -28,9 +31,11 @@ angular.module('app.controllers', []).
     });
   };
   scope.upload = function() {
-    picture.create(scope.picture, function(picture) {
+    var object = scope.base64.array[0];
+    picture.model.setBinaryFile('data', object.fileName, object.fileType, object.content);
+    picture.create({}, function(picture) {
       scope.picture = picture;
-      scope.$digets();
+      scope.$digest();
     });
   };
 }]);

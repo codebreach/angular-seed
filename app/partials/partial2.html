@@ -1,6 +1,14 @@
 <p>This is the partial for view 2.</p>
 <p>
   <div>
-    
+    <input type='file'
+	   data-base-sixty 
+	   data-model='base64'>
+    <div ng-repeat='item in base64.array'>
+      {{base64.fileName}} - {{base64.content.length}}
+    </div>
+    <button ng-click='upload()'>Upload</button>
+    <button ng-click='clear()'>Clear</button>
+    <img ng-src="{{picture.data}}" />
   </div>  
 </p>

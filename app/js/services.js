@@ -29,8 +29,9 @@ angular.module('app.services', []).factory('model', function($rootScope) {
     service.model.fetch(callbacks_(callback));
   };
   service.create = function(json, callback) {
-    service.model = new service.modelProvider(json);
-    service.model.create(callbacks(callback));
+    service.model = service.model || new service.modelProvider();
+    service.model.set(json);
+    service.model.create(callbacks_(callback));
   };
   service.save = function(json, callback) {
     service.model.save(json, callbacks_(callback));
