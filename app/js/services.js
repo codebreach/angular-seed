@@ -19,12 +19,12 @@ angular.module('app.services', []).factory('model', function($rootScope) {
     };
   };
   /**
-   * @param {string=} id The id of the object
+   * @param {string} id The id of the object
    * @param {function(!Object)=} callback 
    */
   service.get = function(id, callback) {
     var options = {};
-    options[schema + '_id'] = id;
+    options[service.schema + '_id'] = id;
     service.model.set(options);
     service.model.fetch(callbacks_(callback));
   };
