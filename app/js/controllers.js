@@ -4,6 +4,7 @@
 
 angular.module('app.controllers', []).
   controller('MyCtrl1', ['$scope', 'user', function(scope, user) {
+  scope.user = user.model.toJSON();
   scope.onclick = function() {
     user.get('user', function(user) {
       scope.user = user;
@@ -42,7 +43,9 @@ angular.module('app.controllers', []).
   ['$scope', '$rootScope', '$location', 'user', 
    function(scope, rootScope, location, user) {
     var callback = function() {
-      location.path('/view1');
+      scope.$apply(function() {
+	location.path('/view1');
+      });
     };
     scope.login = function() {
       user.login(scope.username, scope.password, callback);

@@ -54,6 +54,13 @@ service('user', function(model) {
     options.fullyPopulatedUser = true;
     instance.model.login('true', options);
   };
+  instance.get_ = instance.get;
+  instance.get = function(_, callback) {
+    if (callback) {
+      instance.model.toJSON ? callback(instance.model.toJSON()) : callback(instance.model);
+    }
+    return instance.model.toJSON ? instance.model.toJSON() : instance.model;
+  }
   $.extend(this, instance);
 }).
 factory('comment', function(model) {
