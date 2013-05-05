@@ -11,13 +11,14 @@ angular.module('app.services', []).factory('model', function($rootScope) {
     return {
       success: function(model) {
         service.model = model;
-        callback(model.toJSON());
+        model.toJSON ? callback(model.toJSON()) : callback(model);
       },
       error: function(reason) {
         log(reason);
       }
     };
   };
+  service.callbacks_ = callbacks_;
   /**
    * @param {string} id The id of the object
    * @param {function(!Object)=} callback 
@@ -43,8 +44,17 @@ angular.module('app.services', []).factory('model', function($rootScope) {
   return service;
   };
 }).
-factory('user', function(model) {
-  return model('user');
+service('user', function(model) {
+  var instance = model('user');
+  instance.modelProvider = StackMob.User;
+  instance.login = function(username, password, callback) {
+    instance.model = new instance.modelProvider({'username': username, 
+						 'password': password});
+    var options = instance.callbacks_(callback);
+    options.fullyPopulatedUser = true;
+    instance.model.login('true', options);
+  };
+  $.extend(this, instance);
 }).
 factory('comment', function(model) {
   return model('comment');

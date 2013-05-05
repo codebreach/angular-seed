@@ -38,4 +38,13 @@ angular.module('app.controllers', []).
       scope.$digest();
     });
   };
-}]);
+}]).controller('LoginCtrl',
+  ['$scope', '$rootScope', '$location', 'user', 
+   function(scope, rootScope, location, user) {
+    var callback = function() {
+      location.path('/view1');
+    };
+    scope.login = function() {
+      user.login(scope.username, scope.password, callback);
+    };
+  }]);
