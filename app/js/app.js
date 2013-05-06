@@ -16,7 +16,8 @@ angular.module('myApp', ['myApp.filters', 'app.services', 'app.directives', 'app
   /* <![CDATA[ */
       StackMob.init({
         publicKey: publicKey,
-        apiVersion: 0
+        apiVersion: 0,
+	secure: StackMob.ALWAYS
       });
     /* ]]> */
   }]);
