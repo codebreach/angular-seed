@@ -14,6 +14,7 @@ angular.module('app.services', []).factory('model', function($rootScope) {
         model.toJSON ? callback(model.toJSON()) : callback(model);
       },
       error: function(reason) {
+	window.alert(reason);  
         log(reason);
       }
     };
