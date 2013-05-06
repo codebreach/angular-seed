@@ -10,12 +10,13 @@ angular.module('app.services', []).factory('model', function($rootScope) {
   var callbacks_ = function(callback) {
     return {
       success: function(model) {
+	console.log('success for ' + service.schema + ' with: ' + model);
         service.model = model;
         model.toJSON ? callback(model.toJSON()) : callback(model);
       },
       error: function(reason) {
 	window.alert(reason);  
-        log(reason);
+        console.log(reason);
       }
     };
   };
@@ -49,6 +50,7 @@ service('user', function(model) {
   var instance = model('user');
   instance.modelProvider = StackMob.User;
   instance.login = function(username, password, callback) {
+    console.log('Logging in: ' + username + ' ' + password);
     instance.model = new instance.modelProvider({'username': username, 
 						 'password': password});
     var options = instance.callbacks_(callback);
