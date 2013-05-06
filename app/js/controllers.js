@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app.controllers', []).
-  controller('MyCtrl1', ['$scope', 'user', function(scope, user) {
+controller('MyCtrl1', ['$scope', 'user', function(scope, user) {
   console.log('view 1 controller loaded');
   scope.user = user.model.toJSON();
   scope.onclick = function() {
@@ -22,7 +22,7 @@ angular.module('app.controllers', []).
     });
   };
   }]).
-  controller('MyCtrl2', 
+controller('MyCtrl2', 
     ['$scope', 'request', 'picture', function(scope, request, picture) {
   console.log('view 2 controller loaded');
   scope.base64 = {array: []};
@@ -44,10 +44,11 @@ angular.module('app.controllers', []).
       scope.$digest();
     });
   };
-}]).controller('LoginCtrl',
+}]).
+controller('LoginCtrl',
   ['$scope', '$rootScope', '$location', 'user', 
    function(scope, rootScope, location, user) {
-    console.log('view 1 controller loaded');
+    console.log('login controller loaded');
     var callback = function() {
       console.log('login callback');
       scope.$apply(function() {
