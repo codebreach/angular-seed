@@ -11,13 +11,15 @@ angular.module('myApp', ['myApp.filters', 'app.services', 'app.directives', 'app
     $routeProvider.when('/login', 
 			{templateUrl: 'partials/login.html', controller: 'LoginCtrl'});
     $routeProvider.otherwise({redirectTo: '/login'});
+    console.log('angular routes installed');
   }]).
   config([function() {
-  /* <![CDATA[ */
+      /* <![CDATA[ */
       StackMob.init({
         publicKey: publicKey,
         apiVersion: 0,
 	secure: StackMob.ALWAYS
       });
-    /* ]]> */
+      /* ]]> */
+      console.log('StackMob init called');
   }]);

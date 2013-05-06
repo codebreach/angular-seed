@@ -20,5 +20,5 @@
     <gap:platform name="android" minVersion="2.1"/>
     <gap:platform name="ios"/>
   </gap:platforms>
-  <access subdomains="true" uri="*" /> 
+  <access origin="*" /> 
 </widget>
